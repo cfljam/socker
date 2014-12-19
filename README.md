@@ -3,6 +3,8 @@ socker
 
 Dockerised Ipython Notebook for statistical genetics and marker design
 
+Based on https://github.com/cfljam/statgen_py_vm
+
 Build
 ------
 
