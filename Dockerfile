@@ -141,19 +141,19 @@ RUN echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rp
 ## Install the R packages
 RUN install2.r --error \
     devtools \
-    RPostgreSQL\
     dplyr \
     ggplot2 \
     reshape2 \
-    tidyr \
     data.table\
-    lubridate\
-    ggvis && \
-    Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
+    ggvis
+#   tidyr \
+#   RPostgresql
+# && \
+#    Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 
 ## Install rpy2
-#RUN pip install rpy2
+RUN pip install rpy2
 
 
 
