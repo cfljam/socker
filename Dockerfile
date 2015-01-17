@@ -134,16 +134,26 @@ RUN apt-get update -qq \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
   && rm -rf /var/lib/apt/lists/*
 
+
 ## Set a default CRAN Repo
 RUN echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
+## Install the R packages
+RUN install2.r --error \
+    devtools \
+    dplyr \
+    ggplot2 \
+    reshape2 \
+    tidyr \
+    data.table\
+    lubridate\
+    ggvis &&
+    Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")' 
 
 
 ## Install rpy2
-RUN pip install rpy2
+#RUN pip install rpy2
 
-## Set a default CRAN Repo
-RUN echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
 
 
