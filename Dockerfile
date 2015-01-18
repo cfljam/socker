@@ -13,22 +13,27 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/
 ## Install _all_ prerequisites in hope that they do not change much.
 ## follow recommendations https://docs.docker.com/articles/dockerfile_best-practices/#run
 RUN set -xe ;\
-  apt-get update ;\
-  apt-get upgrade -y ;\
-  apt-get install -y \
+  apt-get update;\
+  apt-get upgrade;\
+  apt-get dist-upgrade ;\
+  apt-get autoremove;\
+  apt-get autoclean;\
+  apt-get install -y --no-install-recommends\
     asciidoc \
     libncurses5-dev \
+    nano\
+    aptitude\
     wget
 
 ## Note tweak to set Python 2.7 default
 RUN set -xe ;\
-  apt-get update ;\
-  apt-get install python-biopython -y; \
+  aptitude update ;\
+  aptitudeinstall python-biopython -y; \
   sed -i 's/python3/python2/' /usr/local/bin/ipython; \
   pip install terminado bcbio-gff
 
 ## Install Primer3
-RUN apt-get install -y primer3
+RUN aptitude install -y primer3
 ## Install vcf utils
 
 WORKDIR /tmp
@@ -37,7 +42,7 @@ ADD http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz /t
 ## Install VCF tools
 RUN set -xe ;\
   tar -zxf vcftools.tar.gz ;\
-  cd vcftools_* ;\
+  cd vcftools_*;\
   make install PREFIX=/usr/local
 
 ENV PERL5LIB /usr/local/lib/perl5
@@ -75,17 +80,21 @@ RUN set -xe ;\
 
 ## Install bedtools plus Python interface
 RUN set -xe ;\
-   apt-get -y install bedtools;\
+   aptitude -y install bedtools;\
    pip install pybedtools
+
+## Install JRE for Beagle
+RUN aptitude install -y openjdk-7-jre
 
 ## Install Beagle 4
 ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bin/beagle.jar
 
-
 ## set up for Gisting Notebooks
 RUN set -xe ;\
-  apt-get  install -y  ruby; \
+  aptitude  install -y  ruby; \
   gem install gist
+
+##########################################
 
 ### Launch ipynb as default
 
