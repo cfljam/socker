@@ -11,7 +11,7 @@ RUN useradd docker \
   && chown docker:docker /home/docker \
   && addgroup docker staff
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN aptitude update && aptitude install -y --no-install-recommends \
     ed \
     less \
     locales \
@@ -36,8 +36,8 @@ RUN apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 \
 ENV R_BASE_VERSION 3.1.2
 
 ## Now install R and littler, and create a link for littler in /usr/local/bin
-RUN apt-get update -qq \
-  && apt-get install -y --force-yes --no-install-recommends \
+RUN aptitude update -qq \
+  && aptitude install -y --force-yes --no-install-recommends \
       littler \
       r-base-core=${R_BASE_VERSION}* \
       r-base=${R_BASE_VERSION}* \
