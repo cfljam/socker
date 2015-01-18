@@ -13,12 +13,13 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/
 ## Install _all_ prerequisites in hope that they do not change much.
 ## follow recommendations https://docs.docker.com/articles/dockerfile_best-practices/#run
 RUN set -xe ;\
-  apt-get update ;\
-  apt-get upgrade -y ;\
-  apt-get install -y \
+  apt-get dist-upgrade ;\
+  apt-get upgrade &&  apt-get update;\
+  apt-get autoremove;\
+  apt-get autoclean;\
+  apt-get install -y --no-install-recommends\
     asciidoc \
     libncurses5-dev \
-    default-jre \
     nano\
     wget
 
@@ -81,7 +82,7 @@ RUN set -xe ;\
    pip install pybedtools
 
 ## Install Beagle 4
-ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bin/beagle.jar
+#ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bin/beagle.jar
 
 ## set up for Gisting Notebooks
 RUN set -xe ;\
