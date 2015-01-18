@@ -2,10 +2,6 @@ FROM  cfljam/socker
 
 MAINTAINER John McCallum john.mccallum@plantandfood.co.nz
 
-# Set noninterative mode
-ENV DEBIAN_FRONTEND noninteractive
-
-
 
 ####### R install ######################
 ## Following https://registry.hub.docker.com/u/rocker/r-base/dockerfile ####
@@ -22,8 +18,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     vim-tiny \
     wget \
     libicu-dev\
-    libxml2\
-    libxml2-dev\
     libpango-1.0-0\
   && rm -rf /var/lib/apt/lists/*
 
@@ -61,8 +55,6 @@ RUN apt-get update -qq \
 ## Set a default CRAN Repo
 RUN echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
-
-
 ## Install the R packages
 RUN install2.r --error \
     devtools \
@@ -71,10 +63,10 @@ RUN install2.r --error \
     reshape2 \
     data.table\
     ggvis
-   tidyr \
-   RPostgresql
- && \
-   Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
+#   tidyr \
+#   RPostgresql
+# && \
+#   Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 
 ## Install rpy2
@@ -92,8 +84,8 @@ CMD ipython notebook --ip=0.0.0.0 --port=8888 --no-browser
 ##################### INSTALLATION END #####################
 
 ## TEST
-ADD test-suite.sh /tmp/test-suite.sh
-RUN ./test-suite.sh
+#ADD ../test-suite.sh /tmp/test-suite.sh
+#RUN ./test-suite.sh
 
 ## Clean up
 RUN rm -rf /tmp/*
