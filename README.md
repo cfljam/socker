@@ -3,6 +3,8 @@ socker
 
 Dockerised Ipython Notebook for statistical genetics and PCR-based marker design
 
+For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html 
+
 Provides
 --------
 

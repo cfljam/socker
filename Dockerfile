@@ -14,8 +14,8 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/
 ## follow recommendations https://docs.docker.com/articles/dockerfile_best-practices/#run
 RUN set -xe ;\
   apt-get update;\
-  apt-get upgrade;\
-  apt-get dist-upgrade ;\
+  apt-get -y upgrade;\
+  apt-get -y dist-upgrade ;\
   apt-get autoremove;\
   apt-get autoclean;\
   apt-get install -y --no-install-recommends\
@@ -28,7 +28,7 @@ RUN set -xe ;\
 ## Note tweak to set Python 2.7 default
 RUN set -xe ;\
   aptitude update ;\
-  aptitudeinstall python-biopython -y; \
+  aptitude install -y python-biopython ; \
   sed -i 's/python3/python2/' /usr/local/bin/ipython; \
   pip install terminado bcbio-gff
 
@@ -36,6 +36,8 @@ RUN set -xe ;\
 RUN aptitude install -y primer3
 ## Install vcf utils
 
+
+## Download VCF tools
 WORKDIR /tmp
 ADD http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz /tmp/vcftools.tar.gz
 
