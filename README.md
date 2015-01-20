@@ -3,7 +3,7 @@ socker
 
 Dockerised Ipython Notebook for statistical genetics and PCR-based marker design
 
-For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html 
+For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html
 
 Provides
 --------
@@ -13,6 +13,7 @@ Provides
 - VCFLib
 - Samtools/HTSLib
 - BedTools
+- R tools
 
 To Run
 ------
@@ -41,8 +42,15 @@ Build
 ------
 
 docker build -t cfljam/socker .
+cd PyR
+docker build -t cfljam/pyr .
 
-Run
+Run Python only version
 ----
 
 docker run -rm -p 8888:8888 -v /my_local_dir:/vm_mount_point -it cfljam/socker
+
+Run Python plus R version
+----
+
+docker run -rm -p 8888:8888 -v /my_local_dir:/vm_mount_point -it cfljam/pyr
