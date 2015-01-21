@@ -14,7 +14,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/
 ## follow recommendations https://docs.docker.com/articles/dockerfile_best-practices/#run
 RUN set -xe ;\
   apt-get update;\
-  apt-get upgrade;\
+  apt-get upgrade -y;\
   apt-get dist-upgrade ;\
   apt-get autoremove;\
   apt-get autoclean;\
@@ -28,7 +28,7 @@ RUN set -xe ;\
 ## Note tweak to set Python 2.7 default
 RUN set -xe ;\
   aptitude update ;\
-  aptitudeinstall python-biopython -y; \
+  aptitude install python-biopython -y; \
   sed -i 's/python3/python2/' /usr/local/bin/ipython; \
   pip install terminado bcbio-gff
 
@@ -70,24 +70,38 @@ RUN set -xe ;\
   make test ;\
   make install
 
-## Install samtools
+## Install samtools plus python interface
 RUN set -xe ;\
   cachebust=29b03673d6 git clone --branch=develop https://github.com/samtools/samtools.git ;\
   cd samtools ;\
   make HTSDIR=/tmp/htslib;\
   make test ;\
-  make install
+  make install;\
+  pip install pysam
 
 ## Install bedtools plus Python interface
 RUN set -xe ;\
    aptitude -y install bedtools;\
    pip install pybedtools
 
+## Install genda
+RUN set -xe ;\
+  cachebust=296c061602 git clone --branch=master https://github.com/jeffhsu3/genda ;\
+  cd genda ;\
+  python setup.py install
+
+
+## Install PCR design
+RUN set -xe ;\
+  cachebust=868086f42c git clone --branch=master https://github.com/cfljam/galaxy-pcr-markers ;\
+  
+
 ## Install JRE for Beagle
-RUN aptitude install -y openjdk-7-jre
+## Broken install !
+#RUN aptitude install -y openjdk-7-jre
 
 ## Install Beagle 4
-ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bin/beagle.jar
+#ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bin/beagle.jar
 
 ## set up for Gisting Notebooks
 RUN set -xe ;\
