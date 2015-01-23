@@ -30,7 +30,7 @@ RUN set -xe ;\
   aptitude update ;\
   aptitude install python-biopython -y; \
   sed -i 's/python3/python2/' /usr/local/bin/ipython; \
-  pip install terminado bcbio-gff
+  pip -v install terminado bcbio-gff
 
 ## Install Primer3
 RUN aptitude install -y primer3
@@ -76,25 +76,28 @@ RUN set -xe ;\
   cd samtools ;\
   make HTSDIR=/tmp/htslib;\
   make test ;\
-  make install;\
-  pip install pysam
+  make install
+##install pysam
+
+WORKDIR /tmp
+ADD https://pypi.python.org/packages/source/p/pysam/pysam-0.8.1.tar.gz /tmp/pysam-0.8.1.tar.gz
+RUN set -xe ;\
+  tar -zxf pysam-0.8.1.tar.gz ;\
+  cd pysam-*;\
+  python setup.py install
 
 ## Install bedtools plus Python interface
 RUN set -xe ;\
    aptitude -y install bedtools;\
-   pip install pybedtools
+   git clone https://github.com/daler/pybedtools;\
+   cd pybedtools;\
+   python setup.py install
 
 ## Install genda
 RUN set -xe ;\
   cachebust=296c061602 git clone --branch=master https://github.com/jeffhsu3/genda ;\
   cd genda ;\
   python setup.py install
-
-
-## Install PCR design
-RUN set -xe ;\
-  cachebust=868086f42c git clone --branch=master https://github.com/cfljam/galaxy-pcr-markers ;\
-  
 
 ## Install JRE for Beagle
 ## Broken install !
