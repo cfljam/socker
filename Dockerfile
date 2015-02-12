@@ -28,9 +28,9 @@ RUN set -xe ;\
 ## Note tweak to set Python 2.7 default
 RUN set -xe ;\
   aptitude update ;\
+  aptitude install -y python-setuptools;\
   aptitude install -y python-biopython ; \
-  sed -i 's/python3/python2/' /usr/local/bin/ipython; \
-  pip install terminado bcbio-gff
+  sed -i 's/python3/python2/' /usr/local/bin/ipython
 
 ## Install Primer3
 RUN aptitude install -y primer3
@@ -82,8 +82,8 @@ RUN set -xe ;\
 
 ## Install bedtools plus Python interface
 RUN set -xe ;\
-   aptitude -y install bedtools;\
-   pip install pybedtools
+   aptitude -y install bedtools
+
 
 ## Install JRE for Beagle
 RUN aptitude install -y openjdk-7-jre
@@ -95,6 +95,11 @@ ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bi
 RUN set -xe ;\
   aptitude  install -y  ruby; \
   gem install gist
+
+### Install python packages
+ADD requirements.txt /tmp/
+pip  --default-timeout=100 install -r /tmp/requirements.txt
+
 
 ##########################################
 
