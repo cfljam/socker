@@ -1,4 +1,4 @@
 ez_setup
 terminado
 bcbio-gff
-# pybedtools
+pybedtools

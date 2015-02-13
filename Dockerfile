@@ -97,9 +97,10 @@ RUN set -xe ;\
   gem install gist
 
 ### Install python packages
+### Note explicit use of Py version to avoid pip version issues
 ADD requirements.txt /tmp/
 RUN set -xe ;\
-pip  --default-timeout=100 install -r /tmp/requirements.txt
+python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.txt
 
 
 ##########################################

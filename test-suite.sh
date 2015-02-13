@@ -22,8 +22,8 @@ function fail
 set -xe
 
 ## basic test of python installation
-#python2 -c "import Bio,BCBio.GFF" || fail "basic python import"
-python2 -c "import Bio" || fail "basic python import"
+python2 -c "import Bio,BCBio.GFF" || fail "basic python import"
+
 
 
 ## basic check vcftools was installed
