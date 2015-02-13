@@ -19,10 +19,12 @@ function fail
 }
 
 ## report all commands from now
-set -xe 
+set -xe
 
 ## basic test of python installation
-python2 -c "import Bio,BCBio.GFF" || fail "basic python import"
+#python2 -c "import Bio,BCBio.GFF" || fail "basic python import"
+python2 -c "import Bio" || fail "basic python import"
+
 
 ## basic check vcftools was installed
 which vcf-merge || fail "no vcf-merge"

@@ -98,6 +98,7 @@ RUN set -xe ;\
 
 ### Install python packages
 ADD requirements.txt /tmp/
+RUN set -xe ;\
 pip  --default-timeout=100 install -r /tmp/requirements.txt
 
 
