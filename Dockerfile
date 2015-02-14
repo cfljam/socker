@@ -14,8 +14,8 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/
 ## follow recommendations https://docs.docker.com/articles/dockerfile_best-practices/#run
 RUN set -xe ;\
   apt-get update;\
-  apt-get upgrade;\
-  apt-get dist-upgrade ;\
+  apt-get -y upgrade;\
+  apt-get -y dist-upgrade ;\
   apt-get autoremove;\
   apt-get autoclean;\
   apt-get install -y --no-install-recommends\
@@ -28,14 +28,16 @@ RUN set -xe ;\
 ## Note tweak to set Python 2.7 default
 RUN set -xe ;\
   aptitude update ;\
-  aptitudeinstall python-biopython -y; \
-  sed -i 's/python3/python2/' /usr/local/bin/ipython; \
-  pip install terminado bcbio-gff
+  aptitude install -y python-setuptools;\
+  aptitude install -y python-biopython ; \
+  sed -i 's/python3/python2/' /usr/local/bin/ipython
 
 ## Install Primer3
 RUN aptitude install -y primer3
 ## Install vcf utils
 
+
+## Download VCF tools
 WORKDIR /tmp
 ADD http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz /tmp/vcftools.tar.gz
 
@@ -80,8 +82,8 @@ RUN set -xe ;\
 
 ## Install bedtools plus Python interface
 RUN set -xe ;\
-   aptitude -y install bedtools;\
-   pip install pybedtools
+   aptitude -y install bedtools
+
 
 ## Install JRE for Beagle
 RUN aptitude install -y openjdk-7-jre
@@ -93,6 +95,13 @@ ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bi
 RUN set -xe ;\
   aptitude  install -y  ruby; \
   gem install gist
+
+### Install python packages
+### Note explicit use of Py version to avoid pip version issues
+ADD requirements.txt /tmp/
+RUN set -xe ;\
+python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.txt
+
 
 ##########################################
 
