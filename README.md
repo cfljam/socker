@@ -59,6 +59,8 @@ docker run -rm -p 8889:8889 -v /my_local_dir:/vm_mount_point -it cfljam/pyr
 
 On OSX or Windows using Boot2docker you will likely  need to open ports in VirtualBox
 
-Settings->Network -> Port Forwarding
+e.g. for port 8889
+
+**Settings->Network -> Port Forwarding**
 
 ![PortFwdVB](https://dl.dropboxusercontent.com/u/8064851/images/VirtualBoxPortForwardiPynbExample.png)

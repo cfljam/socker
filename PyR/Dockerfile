@@ -65,7 +65,7 @@ RUN install2.r --error \
     data.table\
     ggvis \
     tidyr \
-#    RPostgresql \
+    RPostgresql \
   &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 
