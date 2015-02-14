@@ -11,7 +11,7 @@ RUN useradd docker \
   && chown docker:docker /home/docker \
   && addgroup docker staff
 
-RUN aptitude update && aptitude install -y --no-install-recommends \
+RUN aptitude update && aptitude install -y --without-recommends \
     ed \
     less \
     locales \
@@ -30,14 +30,15 @@ ENV LC_ALL en_US.UTF-8
 
 ## Use Ubuntu repo at CRAN, and use RStudio CDN as mirror
 ## This gets us updated r-base, r-base-dev, r-recommended and littler
-RUN apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 \
+RUN gpg --keyserver pgpkeys.mit.edu --recv-key 51716619E084DAB9  \
+&& gpg -a --export 51716619E084DAB9 | sudo apt-key add  - \
   && echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" > /etc/apt/sources.list.d/r-cran.list
 
 ENV R_BASE_VERSION 3.1.2
 
 ## Now install R and littler, and create a link for littler in /usr/local/bin
-RUN aptitude update -qq \
-  && aptitude install -y --force-yes --no-install-recommends \
+RUN aptitude update -q \
+  && aptitude install -y --without-recommends \
       littler \
       r-base-core=${R_BASE_VERSION}* \
       r-base=${R_BASE_VERSION}* \
@@ -63,14 +64,13 @@ RUN install2.r --error \
     reshape2 \
     data.table\
     ggvis
-#   tidyr \
-#   RPostgresql
-# && \
-#   Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
+    tidyr \
+    RPostgresql
+  &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 
 ## Install rpy2
-RUN pip install rpy2
+RUN python2 /usr/local/bin/pip   --default-timeout=100 install rpy2
 
 
 
@@ -79,7 +79,7 @@ RUN pip install rpy2
 
 ### Launch ipynb as default
 
-CMD ipython notebook --ip=0.0.0.0 --port=8888 --no-browser
+CMD ipython notebook --ip=0.0.0.0 --port=8889 --no-browser
 
 ##################### INSTALLATION END #####################
 
