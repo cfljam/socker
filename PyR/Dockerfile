@@ -63,9 +63,9 @@ RUN install2.r --error \
     ggplot2 \
     reshape2 \
     data.table\
-    ggvis
+    ggvis \
     tidyr \
-    RPostgresql
+#    RPostgresql \
   &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 

@@ -1,7 +1,7 @@
 socker
 ======
 
-Dockerised Ipython Notebook for statistical genetics and PCR-based marker design
+Dockerised Jupyter (ipython) Notebook for statistical genetics (and variant validation assay design)
 
 For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html
 
@@ -25,32 +25,40 @@ To Run
 boot2docker up
 ```
 
-- Start up socker
+## Build Images
+
+
+### Build Basic Python and Tools Image
 
 ```
-docker run --rm  -v <local dir to mount>:<mount point in VM> -p 8888:8888 -it cfljam/socker
-```
-
-- Point your host browser at http://localhost:8888/
-
-=======
-Dockerised Ipython Notebook for statistical genetics and marker design
-
-Based on https://github.com/cfljam/statgen_py_vm
-
-Build
-------
-
 docker build -t cfljam/socker .
+```
+### Build the Version with R
+
+```
 cd PyR
 docker build -t cfljam/pyr .
+```
 
-Run Python only version
-----
+## Run Python only version
 
-docker run -rm -p 8888:8888 -v /my_local_dir:/vm_mount_point -it cfljam/socker
 
-Run Python plus R version
-----
+```
+docker run --rm  -v <local dir to mount>:<mount point in VM> -p 8889:8889 -it cfljam/socker
+```
 
-docker run -rm -p 8888:8888 -v /my_local_dir:/vm_mount_point -it cfljam/pyr
+- Point your host browser at http://localhost:8889/
+
+## Run Python plus R version
+
+```
+docker run -rm -p 8889:8889 -v /my_local_dir:/vm_mount_point -it cfljam/pyr
+```
+
+## Note
+
+On OSX or Windows using Boot2docker you will likely  need to open ports in VirtualBox
+
+Settings->Network -> Port Forwarding
+
+![PortFwdVB](https://dl.dropboxusercontent.com/u/8064851/images/VirtualBoxPortForwardiPynbExample.png)
