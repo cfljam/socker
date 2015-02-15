@@ -57,10 +57,14 @@ docker run -rm -p 8889:8889 -v /my_local_dir:/vm_mount_point -it cfljam/pyr
 
 ## Note
 
-On OSX or Windows using Boot2docker you will likely  need to open ports in VirtualBox
+On OSX or Windows using Boot2docker you will likely  need to open ports in VirtualBox by:
+
+1. Doing this manually
 
 e.g. for port 8889
 
 **Settings->Network -> Port Forwarding**
 
 ![PortFwdVB](https://dl.dropboxusercontent.com/u/8064851/images/VirtualBoxPortForwardiPynbExample.png)
+
+2. Using a modified boot2docker in Vagrant 1. Use a modified boot2docker for Vagrant https://github.com/YungSang/boot2docker-vagrant-box
