@@ -30,9 +30,10 @@ sudo /etc/init.d/docker start
 ```
 
 - Configure docker when behind a proxy
+
 (Check to see if profile file exists and add the needed configuration)
 ```
-vi /var/lib/boot2docker/profile
+vi /var/lib/boot2docker/profile 
 ...
 export HTTP_PROXY=http://{proxy_host}:{proxy_port}
 export HTTPS_PROXY=https://{proxy_host}:{proxy_port}
@@ -50,8 +51,9 @@ sudo /etc/init.d/docker restart
 
 Add in at head of Dockerfile:
 
->ENV http_proxy http://my_prox_url:<port>
->ENV https_proxy https://my_prox_url:<port>
+>ENV http_proxy http://my_proxy_url.com:<port>
+
+>ENV https_proxy https://my_proxy_url.com:<port>
 
 
 
