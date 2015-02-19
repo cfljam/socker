@@ -46,6 +46,14 @@ sudo /etc/init.d/docker restart
 
 ## Build Images
 
+### Behind a Proxy
+
+Add in at head of Dockerfile:
+
+>ENV http_proxy http://my_prox_url:<port>
+>ENV https_proxy https://my_prox_url:<port>
+
+
 
 ### Build Basic Python and Tools Image
 
