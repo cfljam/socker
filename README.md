@@ -20,12 +20,39 @@ To Run
 
 - On OSX or Windows, install [Boot2Docker](https://github.com/boot2docker/boot2docker)
 - Start up Boot2docker
-
 ```
 boot2docker up
 ```
 
+- Get daemon running
+```
+sudo /etc/init.d/docker start
+```
+
+- Configure docker when behind a proxy
+(Check to see if profile file exists and add the needed configuration)
+```
+vi /var/lib/boot2docker/profile
+...
+export HTTP_PROXY=http://{proxy_host}:{proxy_port}
+export HTTPS_PROXY=https://{proxy_host}:{proxy_port}
+```
+
+- Restart the docker process
+```
+sudo /etc/init.d/docker restart
+```
+(For more details, visit https://nickytd.wordpress.com/2014/07/17/docker-behind-a-proxy/)
+
 ## Build Images
+
+### Behind a Proxy
+
+Add in at head of Dockerfile:
+
+>ENV http_proxy http://my_prox_url:<port>
+>ENV https_proxy https://my_prox_url:<port>
+
 
 
 ### Build Basic Python and Tools Image
