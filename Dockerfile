@@ -102,6 +102,15 @@ ADD requirements.txt /tmp/
 RUN set -xe ;\
 python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.txt
 
+### Install Exonerate
+RUN set -xe ;\
+  cachebust=9c09e4f4ae git clone https://github.com/nathanweeks/exonerate.git ;\
+  cd exonerate ;\
+  ./configure ;\
+  make ;\
+  make check ;\
+  make install
+
 
 ##########################################
 
