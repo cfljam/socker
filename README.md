@@ -20,10 +20,12 @@ To Run
 
 - On OSX or Windows, install [Boot2Docker](https://github.com/boot2docker/boot2docker)
 - Start up Boot2docker
+
 ```
 boot2docker up
+$(boot2docker shellinit) ## on OSX or Linux
 ```
-
+- see 
 - Get daemon running
 ```
 sudo /etc/init.d/docker start
