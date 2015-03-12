@@ -106,6 +106,7 @@ python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.
 RUN set -xe ;\
   cachebust=9c09e4f4ae git clone https://github.com/nathanweeks/exonerate.git ;\
   cd exonerate ;\
+  git checkout v2.4.0;\
   ./configure ;\
   make ;\
   make check ;\
