@@ -11,3 +11,4 @@ TO DO
 
 - RQTL
 - Adegenet
+- LPMerge
