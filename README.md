@@ -98,5 +98,5 @@ e.g. for port 8889
 
 ![PortFwdVB](https://dl.dropboxusercontent.com/u/8064851/images/VirtualBoxPortForwardiPynbExample.png)
 
-2. Using a modified boot2docker in Vagrant 
+2. On OSX consider dvm  http://fnichol.github.io/dvm/
 3. Use a modified boot2docker for Vagrant https://github.com/YungSang/boot2docker-vagrant-box
