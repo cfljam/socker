@@ -13,7 +13,8 @@ Provides
 - VCFLib
 - Samtools/HTSLib
 - BedTools
-- R tools
+- R base (using Rocker)
+- R data manipulation and genetics tools
 
 To Run
 ------
@@ -25,7 +26,7 @@ To Run
 boot2docker up
 $(boot2docker shellinit) ## on OSX or Linux
 ```
-- see 
+- see
 - Get daemon running
 ```
 sudo /etc/init.d/docker start
@@ -35,7 +36,7 @@ sudo /etc/init.d/docker start
 
 (Check to see if profile file exists and add the needed configuration)
 ```
-vi /var/lib/boot2docker/profile 
+vi /var/lib/boot2docker/profile
 ...
 export HTTP_PROXY=http://{proxy_host}:{proxy_port}
 export HTTPS_PROXY=https://{proxy_host}:{proxy_port}

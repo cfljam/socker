@@ -19,6 +19,7 @@ RUN aptitude update && aptitude install -y --without-recommends \
     wget \
     libicu-dev\
     libpango-1.0-0\
+    libpq-dev \
   && rm -rf /var/lib/apt/lists/*
 
 ## Configure default locale, see https://github.com/rocker-org/rocker/issues/19
@@ -39,11 +40,12 @@ ENV R_BASE_VERSION 3.1.2
 ## Now install R and littler, and create a link for littler in /usr/local/bin
 RUN aptitude update -q \
   && aptitude install -y --without-recommends \
-      littler \
-      r-base-core=${R_BASE_VERSION}* \
+      littler/unstable \
       r-base=${R_BASE_VERSION}* \
       r-base-dev=${R_BASE_VERSION}* \
       r-recommended=${R_BASE_VERSION}* \
+      && echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site \
+      && echo 'source("/etc/R/Rprofile.site")' >> /etc/littler.r \
   && ln -s /usr/share/doc/littler/examples/install.r /usr/local/bin/install.r \
   && ln -s /usr/share/doc/littler/examples/install2.r /usr/local/bin/install2.r \
   && ln -s /usr/share/doc/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
@@ -56,7 +58,7 @@ RUN aptitude update -q \
 ## Set a default CRAN Repo
 RUN echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
-## Install the R packages
+## Install  R packages for Generic Data Manipulation
 RUN install2.r --error \
     devtools \
     dplyr \
@@ -65,7 +67,15 @@ RUN install2.r --error \
     data.table\
     ggvis \
     tidyr \
-    RPostgresql \
+    RPostgreSQL \
+    stringi
+
+## Install  R packages for Genetics
+RUN install2.r --error \
+    adegenet \
+    ade4 \
+    qtl \
+    GenABEL \
   &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 
