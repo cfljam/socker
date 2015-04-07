@@ -2,6 +2,10 @@ FROM  cfljam/socker
 
 MAINTAINER John McCallum john.mccallum@plantandfood.co.nz
 
+####PFR#############
+
+ENV http_proxy  http://proxy.pfr.co.nz:8080
+ENV https_proxy  https://proxy.pfr.co.nz:8080
 
 ####### R install ######################
 ## Following https://registry.hub.docker.com/u/rocker/r-base/dockerfile ####
@@ -31,8 +35,10 @@ ENV LC_ALL en_US.UTF-8
 
 ## Use Ubuntu repo at CRAN, and use RStudio CDN as mirror
 ## This gets us updated r-base, r-base-dev, r-recommended and littler
-RUN gpg --keyserver pgpkeys.mit.edu --recv-key 51716619E084DAB9  \
-&& gpg -a --export 51716619E084DAB9 | sudo apt-key add  - \
+### Mod for firewall see http://cran.rstudio.com/bin/linux/ubuntu/
+
+RUN  gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E084DAB9  \
+&& gpg -a --export E084DAB9 | sudo apt-key add - \
   && echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" > /etc/apt/sources.list.d/r-cran.list
 
 ENV R_BASE_VERSION 3.1.2
@@ -55,6 +61,7 @@ RUN aptitude update -q \
   && rm -rf /var/lib/apt/lists/*
 
 
+
 ## Set a default CRAN Repo
 RUN echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
@@ -65,7 +72,6 @@ RUN install2.r --error \
     ggplot2 \
     reshape2 \
     data.table\
-    ggvis \
     tidyr \
     RPostgreSQL \
     stringi
