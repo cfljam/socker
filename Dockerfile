@@ -5,6 +5,12 @@ MAINTAINER John McCallum john.mccallum@plantandfood.co.nz
 # Set noninterative mode
 ENV DEBIAN_FRONTEND noninteractive
 
+### Set PFR proxies
+
+ENV http_proxy  http://proxy.pfr.co.nz:8080
+ENV https_proxy  https://proxy.pfr.co.nz:8080
+
+
 ################## BEGIN INSTALLATION ######################
 
 ## ipython/ipython is 14.04 (trusty) and ncurses is for samtools and precise dependencies are unresolved
@@ -100,7 +106,7 @@ RUN set -xe ;\
 ### Note explicit use of Py version to avoid pip version issues
 ADD requirements.txt /tmp/
 RUN set -xe ;\
-python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.txt
+python2 /usr/local/bin/pip   --default-timeout=1000 install --proxy=proxy.pfr.co.nz:8080 -r /tmp/requirements.txt
 
 ### Install Exonerate
 RUN set -xe ;\
@@ -112,6 +118,15 @@ RUN set -xe ;\
   make check ;\
   make install
 
+###############################################
+## TEST
+## take precaution of removing stray linefeeds from Windows
+WORKDIR /tmp
+ADD ./test-suite.sh /tmp/test-suite.sh
+RUN sed -i 's/\r//' /tmp/test-suite.sh && /tmp/test-suite.sh
+
+## Clean up
+RUN rm -rf /tmp/*
 
 ##########################################
 
@@ -120,10 +135,3 @@ RUN set -xe ;\
 CMD ipython notebook --ip=0.0.0.0 --port=8888 --no-browser
 
 ##################### INSTALLATION END #####################
-
-## TEST
-ADD test-suite.sh /tmp/test-suite.sh
-RUN ./test-suite.sh
-
-## Clean up
-RUN rm -rf /tmp/*

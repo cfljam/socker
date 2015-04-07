@@ -25,7 +25,6 @@ set -xe
 python2 -c "import Bio,BCBio.GFF" || fail "basic python import"
 
 
-
 ## basic check vcftools was installed
 which vcf-merge || fail "no vcf-merge"
 
