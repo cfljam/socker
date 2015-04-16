@@ -101,6 +101,7 @@ ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bi
 RUN set -xe ;\
   aptitude  install -y  ruby; \
   gem install gist
+  
 
 ### Install python packages
 ### Note explicit use of Py version to avoid pip version issues
