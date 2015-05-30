@@ -56,7 +56,8 @@ RUN aptitude update -q \
 
 
 ## Set a default CRAN Repo
-RUN echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
+RUN mkdir -p /etc/R \
+  && echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
 ## Install  R packages for Generic Data Manipulation
 RUN install2.r --error \
@@ -89,7 +90,9 @@ RUN python2 /usr/local/bin/pip   --default-timeout=100 install rpy2
 
 ### Launch ipynb as default
 
-CMD ipython notebook --ip=0.0.0.0 --port=8889 --no-browser
+### First move to VirtualBox Default Drive Share /Users
+
+CMD cd /Users && ipython notebook --ip=0.0.0.0 --port=8889 --no-browser
 
 ##################### INSTALLATION END #####################
 
