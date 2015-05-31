@@ -15,11 +15,13 @@ Provides
 - BedTools
 - R base (using Rocker)
 - R data manipulation and genetics tools
+- iPython Rkernel and R2py magic
 
 To Run
 ------
 
 - On OSX or Windows, install [Boot2Docker](https://github.com/boot2docker/boot2docker)
+- or [docker-machine](https://docs.docker.com/machine/)
 - Start up Boot2docker
 
 ```
