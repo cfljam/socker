@@ -61,15 +61,15 @@ RUN mkdir -p /etc/R \
 
 ## Install  R packages for Generic Data Manipulation
 RUN install2.r --error \
-    devtools \
     dplyr \
     ggplot2 \
     reshape2 \
     data.table\
     ggvis \
-    tidyr \
-    RPostgreSQL \
+    tidyr\
+   RPostgreSQL \
     stringi
+
 
 ## Install  R packages for Genetics
 RUN install2.r --error \
@@ -83,7 +83,19 @@ RUN install2.r --error \
 ## Install rpy2
 RUN python2 /usr/local/bin/pip   --default-timeout=100 install rpy2
 
+##  Fix libxml2 issues
+RUN aptitude update && aptitude install -y libxml2=2.9.1+dfsg1-3ubuntu4 \
+ libxml2-dev=2.9.1+dfsg1-3ubuntu4 && \
+  apt-mark hold libxml2-dev libxml2
 
+
+##Install R kernel
+RUN install.r devtools \
+&& git clone https://github.com/armstrtw/rzmq.git --recursive \
+&& echo "library(devtools) ; install_local('./rzmq')" | r  \
+&& echo "library(devtools) ; install_github('IRkernel/repr' )" | r  \
+&&echo "library(devtools) ; install_github(c('IRkernel/IRdisplay','IRkernel/IRkernel'))" | r \
+&& echo "IRkernel::installspec()" | r
 
 
 ##########################################
@@ -91,8 +103,9 @@ RUN python2 /usr/local/bin/pip   --default-timeout=100 install rpy2
 ### Launch ipynb as default
 
 ### First move to VirtualBox Default Drive Share /Users
+##
 
-CMD cd /Users && ipython notebook --ip=0.0.0.0 --port=8889 --no-browser
+CMD cd /Documents && ipython notebook --ip=0.0.0.0 --port=8889 --no-browser
 
 ##################### INSTALLATION END #####################
 
