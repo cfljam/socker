@@ -1,7 +1,8 @@
 socker
 ======
 
-Dockerised Jupyter (ipython) Notebook for statistical genetics (and variant validation assay design)
+Dockerised Jupyter (ipython) Notebook for statistical genetics and genomics.
+Customisable, reproducible  and disposable environment for authoring genetic analysis documents.
 
 For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html
 
