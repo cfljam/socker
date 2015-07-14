@@ -84,13 +84,6 @@ RUN set -xe ;\
 RUN set -xe ;\
    apt-get  install -y  bedtools
 
-
-## Install JRE for Beagle
-RUN apt-get  install -y openjdk-7-jre
-
-## Install Beagle 4
-ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bin/beagle.jar
-
 ### Install Exonerate
 RUN set -xe ;\
   cachebust=9c09e4f4ae git clone https://github.com/nathanweeks/exonerate.git ;\
