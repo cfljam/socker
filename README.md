@@ -1,22 +1,18 @@
 socker
 ======
 
-Dockerised Jupyter (ipython) Notebook for statistical genetics and genomics.
-Customisable, reproducible  and disposable environment for authoring genetic analysis documents.
-
+Dockerised Jupyter (ipython) Notebook for statistical genetics (and variant validation assay design)
+Built on cfljam/pyrat
 For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html
 
 Provides
 --------
 
-- IPython notebook, SciPy stack
 - VCFtools
 - VCFLib
 - Samtools/HTSLib
 - BedTools
-- R base (using Rocker)
-- R data manipulation and genetics tools
-- iPython Rkernel and R2py magic
+- R genetics tools
 
 To Run
 ------
@@ -51,43 +47,10 @@ sudo /etc/init.d/docker restart
 ```
 (For more details, visit https://nickytd.wordpress.com/2014/07/17/docker-behind-a-proxy/)
 
-## Build Images
-
-### Behind a Proxy
-
-Add in at head of Dockerfile:
-
->ENV http_proxy http://my_proxy_url.com:<port>
-
->ENV https_proxy https://my_proxy_url.com:<port>
-
-
-
-### Build Basic Python and Tools Image
+- Pull and run the image
 
 ```
-docker build -t cfljam/socker .
-```
-### Build the Version with R
-
-```
-cd PyR
-docker build -t cfljam/pyr .
-```
-
-## Run Python only version
-
-
-```
-docker run --rm  -v <local dir to mount>:<mount point in VM> -p 8889:8889 -it cfljam/socker
-```
-
-- Point your host browser at http://localhost:8889/
-
-## Run Python plus R version
-
-```
-docker run -rm -p 8889:8889 -v /my_local_dir:/vm_mount_point -it cfljam/pyr
+docker run -rm -p 8888:8888 -v /my_local_dir:/vm_mount_point -it cfljam/socker
 ```
 
 ## Note

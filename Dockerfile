@@ -1,4 +1,4 @@
-FROM  ipython/scipystack
+FROM  cfljam/pyrat
 
 MAINTAINER John McCallum john.mccallum@plantandfood.co.nz
 
@@ -10,32 +10,32 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ipython/ipython is 14.04 (trusty) and ncurses is for samtools and precise dependencies are unresolved
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
 
-## Install _all_ prerequisites in hope that they do not change much.
-## follow recommendations https://docs.docker.com/articles/dockerfile_best-practices/#run
+
+##Install BioPython
 RUN set -xe ;\
   apt-get update;\
   apt-get -y upgrade;\
   apt-get -y dist-upgrade ;\
   apt-get autoremove;\
   apt-get autoclean;\
-  apt-get install -y --no-install-recommends\
-    asciidoc \
-    libncurses5-dev \
-    nano\
-    aptitude\
-    wget
+  apt-get install -y \
+  python-setuptools \
+  python-biopython
 
-## Note tweak to set Python 2.7 default
+### Install python packages
+### Note explicit use of Py version to avoid pip version issues
+ADD requirements.txt /tmp/
 RUN set -xe ;\
-  aptitude update ;\
-  aptitude install -y python-setuptools;\
-  aptitude install -y python-biopython ; \
-  sed -i 's/python3/python2/' /usr/local/bin/ipython
+python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.txt
 
-## Install Primer3
-RUN aptitude install -y primer3
-## Install vcf utils
 
+## Install  R packages for Genetics
+RUN install2.r --error \
+    adegenet \
+    ade4 \
+    qtl \
+    GenABEL \
+  &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 ## Download VCF tools
 WORKDIR /tmp
@@ -82,25 +82,7 @@ RUN set -xe ;\
 
 ## Install bedtools plus Python interface
 RUN set -xe ;\
-   aptitude -y install bedtools
-
-
-## Install JRE for Beagle
-RUN aptitude install -y openjdk-7-jre
-
-## Install Beagle 4
-ADD http://faculty.washington.edu/browning/beagle/beagle.r1398.jar /usr/local/bin/beagle.jar
-
-## set up for Gisting Notebooks
-RUN set -xe ;\
-  aptitude  install -y  ruby; \
-  gem install gist
-
-### Install python packages
-### Note explicit use of Py version to avoid pip version issues
-ADD requirements.txt /tmp/
-RUN set -xe ;\
-python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.txt
+   apt-get  install -y  bedtools
 
 ### Install Exonerate
 RUN set -xe ;\
@@ -111,7 +93,6 @@ RUN set -xe ;\
   make ;\
   make check ;\
   make install
-
 
 ##########################################
 
