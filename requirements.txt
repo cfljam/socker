@@ -2,3 +2,4 @@ ez_setup
 terminado
 bcbio-gff
 pybedtools
+primer3-py

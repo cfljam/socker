@@ -2,19 +2,19 @@ socker
 ======
 
 Dockerised Jupyter (ipython) Notebook for statistical genetics (and variant validation assay design)
+Built on cfljam/pyrat
 
 For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html
 
 Provides
 --------
 
-- IPython notebook, SciPy stack
 - VCFtools
 - VCFLib
 - Samtools/HTSLib
 - BedTools
-- R base (using Rocker)
-- R data manipulation and genetics tools
+- Genda
+- R  genetics and mappping tools
 
 To Run
 ------
@@ -60,10 +60,10 @@ Add in at head of Dockerfile:
 
 
 
-### Build Basic Python and Tools Image
+### Build Basic pyrat
 
 ```
-docker build -t cfljam/socker .
+docker build -t cfljam/pyrat .
 ```
 ### Build the Version with R
 
