@@ -2,7 +2,9 @@ socker
 ======
 
 Dockerised Jupyter (ipython) Notebook for statistical genetics (and variant validation assay design)
-Built on cfljam/pyrat
+
+Built on [cfljam/pyrat](https://github.com/cfljam/pyRat)
+
 For info about ipython scipystack see http://odewahn.github.io/docker-jumpstart/ipython-notebook.html
 
 Provides
