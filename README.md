@@ -59,7 +59,7 @@ On OSX or Windows using Boot2docker you will likely  need to open ports in Virtu
 
 1. Doing this manually
 
-e.g. for port 8889
+e.g. for port 8888
 
 **Settings->Network -> Port Forwarding**
 
