@@ -3,3 +3,4 @@ terminado
 bcbio-gff
 pybedtools
 primer3-py
+xlrd

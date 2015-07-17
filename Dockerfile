@@ -29,24 +29,6 @@ RUN set -xe ;\
 python2 /usr/local/bin/pip   --default-timeout=100 install -r /tmp/requirements.txt
 
 
-## Install  R packages for Genetics
-RUN install2.r --error \
-    adegenet \
-    ade4 \
-    qtl \
-    GenABEL \
-  &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
-
-## Download VCF tools
-WORKDIR /tmp
-ADD http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz /tmp/vcftools.tar.gz
-
-## Install VCF tools
-RUN set -xe ;\
-  tar -zxf vcftools.tar.gz ;\
-  cd vcftools_*;\
-  make install PREFIX=/usr/local
-
 ENV PERL5LIB /usr/local/lib/perl5
 
 ## Install VCF lib
@@ -61,14 +43,6 @@ RUN set -xe ;\
   cachebust=dfd67733e1 git clone --branch=develop https://github.com/samtools/htslib.git ;\
   cd htslib ;\
   make ;\
-  make test ;\
-  make install
-
-## Install BCF tools
-RUN set -xe ;\
-  cachebust=18444012a9 git clone --branch=develop https://github.com/samtools/bcftools.git ;\
-  cd bcftools ;\
-  make HTSDIR=/tmp/htslib;\
   make test ;\
   make install
 
@@ -93,6 +67,32 @@ RUN set -xe ;\
   make ;\
   make check ;\
   make install
+
+## Install BCF tools
+RUN set -xe ;\
+  cachebust=18444012a9 git clone --branch=develop https://github.com/samtools/bcftools.git ;\
+  cd bcftools ;\
+  make HTSDIR=/tmp/htslib;\
+  make test ;\
+  make install
+
+  ## Download VCF tools
+#WORKDIR /tmp
+#ADD http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz /tmp/vcftools.tar.gz
+
+## Install VCF tools
+#RUN set -xe ;\
+#  tar -zxf vcftools.tar.gz ;\
+#  cd vcftools_*;\
+#  make install PREFIX=/usr/local
+
+## Install  R packages for Genetics
+RUN install2.r --error \
+    adegenet \
+    ade4 \
+    qtl \
+    GenABEL \
+  &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 ##########################################
 
