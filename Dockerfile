@@ -76,7 +76,13 @@ RUN set -xe ;\
   make test ;\
   make install
 
-  ## Download VCF tools
+
+## Install  R packages for Genetics
+ADD R-requirements.txt /tmp/
+RUN install2.r --error $(cat /tmp/R-requirements.txt) \
+  &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
+
+ ## Download VCF tools ...if sourceforge is up..
 #WORKDIR /tmp
 #ADD http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz /tmp/vcftools.tar.gz
 
@@ -85,14 +91,6 @@ RUN set -xe ;\
 #  tar -zxf vcftools.tar.gz ;\
 #  cd vcftools_*;\
 #  make install PREFIX=/usr/local
-
-## Install  R packages for Genetics
-RUN install2.r --error \
-    adegenet \
-    ade4 \
-    qtl \
-    GenABEL \
-  &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 ##########################################
 
