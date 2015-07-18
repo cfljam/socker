@@ -18,10 +18,11 @@ RUN set -xe ;\
   apt-get -y dist-upgrade ;\
   apt-get autoremove;\
   apt-get autoclean;\
-  autoreconf -f -i ;\
-  apt-get install -y \
+  apt-get install -y 
+  build-essential \
   python-setuptools \
-  python-biopython
+  python-biopython ;\
+  autoreconf -f -i 
 
 ### Install python packages
 ### Note explicit use of Py version to avoid pip version issues
