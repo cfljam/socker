@@ -18,7 +18,7 @@ RUN set -xe ;\
   apt-get -y dist-upgrade ;\
   apt-get autoremove;\
   apt-get autoclean;\
-  apt-get install -y 
+  apt-get install -y \
   build-essential \
   python-setuptools \
   python-biopython ;\
