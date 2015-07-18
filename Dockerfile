@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
 
 
-##Install BioPython
+##Install Prerequisites and BioPython
 RUN set -xe ;\
   apt-get update;\
   apt-get -y upgrade;\
@@ -19,6 +19,8 @@ RUN set -xe ;\
   apt-get autoremove;\
   apt-get autoclean;\
   apt-get install -y \
+  automake \
+  autotools-dev \
   python-setuptools \
   python-biopython
 
