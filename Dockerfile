@@ -21,8 +21,7 @@ RUN set -xe ;\
   apt-get install -y \
   build-essential \
   python-setuptools \
-  python-biopython ;\
-  autoreconf -f -i 
+  python-biopython 
 
 ### Install python packages
 ### Note explicit use of Py version to avoid pip version issues
