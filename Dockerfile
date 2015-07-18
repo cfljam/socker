@@ -64,6 +64,7 @@ RUN set -xe ;\
   cachebust=9c09e4f4ae git clone https://github.com/nathanweeks/exonerate.git ;\
   cd exonerate ;\
   git checkout v2.4.0;\
+  autoreconf -f -i ;\
   ./configure ;\
   make ;\
   make check ;\
