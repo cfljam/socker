@@ -18,9 +18,8 @@ RUN set -xe ;\
   apt-get -y dist-upgrade ;\
   apt-get autoremove;\
   apt-get autoclean;\
+  autoreconf -f -i ;\
   apt-get install -y \
-  automake \
-  autotools-dev \
   python-setuptools \
   python-biopython
 
