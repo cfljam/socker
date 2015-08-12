@@ -84,15 +84,14 @@ ADD R-requirements.txt /tmp/
 RUN install2.r --error $(cat /tmp/R-requirements.txt) \
   &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
- ## Download VCF tools ...if sourceforge is up..
-#WORKDIR /tmp
-#ADD http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz /tmp/vcftools.tar.gz
-
 ## Install VCF tools
-#RUN set -xe ;\
-#  tar -zxf vcftools.tar.gz ;\
-#  cd vcftools_*;\
-#  make install PREFIX=/usr/local
+RUN set -xe ;\
+ git clone https://github.com/vcftools/vcftools;\
+cd vcftools; \
+ ./autogen.sh;\
+ ./configure;\
+ make;\
+make install
 
 ##########################################
 
