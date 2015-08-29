@@ -1,4 +1,0 @@
-adegenet
-ade4
-qtl
-GenABEL
