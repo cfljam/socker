@@ -1,4 +1,4 @@
-FROM  cfljam/pyrat
+FROM  cfljam/pyrat_genetics
 
 MAINTAINER John McCallum john.mccallum@plantandfood.co.nz
 
@@ -21,7 +21,7 @@ RUN set -xe ;\
   apt-get install -y \
   build-essential \
   python-setuptools \
-  python-biopython 
+  python-biopython
 
 ### Install python packages
 ### Note explicit use of Py version to avoid pip version issues
@@ -34,14 +34,14 @@ ENV PERL5LIB /usr/local/lib/perl5
 
 ## Install VCF lib
 RUN set -xe ;\
-  cachebust=ce69f84cf5 git clone --recursive https://github.com/ekg/vcflib.git ;\
+  git clone --recursive https://github.com/ekg/vcflib.git ;\
   cd vcflib ;\
   make ;\
   cp ./bin/* /usr/local/bin/
 
 ## Install HTS lib
 RUN set -xe ;\
-  cachebust=dfd67733e1 git clone --branch=develop https://github.com/samtools/htslib.git ;\
+  git clone --branch=develop https://github.com/samtools/htslib.git ;\
   cd htslib ;\
   make ;\
   make test ;\
@@ -49,7 +49,7 @@ RUN set -xe ;\
 
 ## Install samtools
 RUN set -xe ;\
-  cachebust=29b03673d6 git clone --branch=develop https://github.com/samtools/samtools.git ;\
+  git clone --branch=develop https://github.com/samtools/samtools.git ;\
   cd samtools ;\
   make HTSDIR=/tmp/htslib;\
   make test ;\
@@ -61,7 +61,7 @@ RUN set -xe ;\
 
 ### Install Exonerate
 RUN set -xe ;\
-  cachebust=9c09e4f4ae git clone https://github.com/nathanweeks/exonerate.git ;\
+  git clone https://github.com/nathanweeks/exonerate.git ;\
   cd exonerate ;\
   git checkout v2.4.0;\
   autoreconf -f -i ;\
@@ -72,17 +72,12 @@ RUN set -xe ;\
 
 ## Install BCF tools
 RUN set -xe ;\
-  cachebust=18444012a9 git clone --branch=develop https://github.com/samtools/bcftools.git ;\
+  git clone --branch=develop https://github.com/samtools/bcftools.git ;\
   cd bcftools ;\
   make HTSDIR=/tmp/htslib;\
   make test ;\
   make install
 
-
-## Install  R packages for Genetics
-ADD R-requirements.txt /tmp/
-RUN install2.r --error $(cat /tmp/R-requirements.txt) \
-  &&  Rscript -e 'source("http://bioconductor.org/biocLite.R"); biocLite("Gviz")'
 
 ## Install VCF tools
 RUN set -xe ;\
